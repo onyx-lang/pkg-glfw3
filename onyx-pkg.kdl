@@ -3,7 +3,7 @@ package {
     author "Brendan Hansen" 
     url "git://onyxlang.io/repo/glfw3" 
     description "GLFW 3 bindings for Onyx" 
-    version "0.0.4" 
+    version "0.0.5" 
 }
 
 config {
