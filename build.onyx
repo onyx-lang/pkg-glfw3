@@ -86,7 +86,12 @@ main :: () {
         os.exit(1);
     }
 
-    result = compile_c_file(c_file_path, string.concat(path, "onyx_glfw3"), libraries=.["glfw"]);
+    flags := tprintf("{} {}",
+        os.command()->path("pkg-config")->args(.["--cflags", "--libs", "glfw3"])->output()->unwrap()->strip_whitespace(),
+        "-Wno-int-conversion"
+    );
+
+    result = compile_c_file(c_file_path, string.concat(path, "onyx_glfw3"), flags=flags);
     if !result {
         os.exit(1);
     }
