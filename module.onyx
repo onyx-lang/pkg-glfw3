@@ -15,7 +15,7 @@ GLFWcursor_p  :: #distinct u64
 
 GLFWimage :: struct #size 16 {
     width, height: i32;
-    pixels: ^u8;
+    pixels: &u8;
 }
 
 GLFWgamepadstate :: struct {
@@ -29,9 +29,9 @@ GLFWvidmode :: struct {
 }
 
 GLFWgammaramp :: struct {
-     red: ^i32;
-     green: ^i32;
-     blue: ^i32;
+     red: &i32;
+     green: &i32;
+     blue: &i32;
      size: i32;
 }
 
@@ -39,8 +39,8 @@ GLFWgammaramp :: struct {
     glfwInit         :: () -> bool ---
     glfwTerminate    :: () -> void ---
     glfwInitHint     :: (hint, value: i32) -> void ---
-    glfwGetVersion   :: (major, minor, rev: ^i32) -> void ---
-    glfwGetError     :: (description: ^cptr(u8)) -> void ---
+    glfwGetVersion   :: (major, minor, rev: &i32) -> void ---
+    glfwGetError     :: (description: &cptr(u8)) -> void ---
     // glfwSetErrorCallback :: (f: (i32, cstr) -> void) -> void ---
 
     glfwMakeContextCurrent :: (window: GLFWwindow_p) -> void ---
@@ -55,9 +55,9 @@ GLFWgammaramp :: struct {
     glfwGetKeyScancode :: (key: i32) -> i32 ---
     glfwGetKey :: (window: GLFWwindow_p, key: i32) -> i32 ---
     glfwGetMouseButton :: (window: GLFWwindow_p, button: i32) -> i32 ---
-    glfwGetCursorPos :: (window: GLFWwindow_p, xpos, ypos: ^f64) -> void ---
+    glfwGetCursorPos :: (window: GLFWwindow_p, xpos, ypos: &f64) -> void ---
     glfwSetCursorPos :: (window: GLFWwindow_p, xpos, ypos: f64) -> void ---
-    glfwCreateCursor :: (image: ^GLFWimage, xhot, yhot: i32) -> GLFWcursor_p ---
+    glfwCreateCursor :: (image: &GLFWimage, xhot, yhot: i32) -> GLFWcursor_p ---
     glfwCreateStandardCursor :: (shape: i32) -> GLFWcursor_p ---
     glfwDestroyCursor :: (cursor: GLFWcursor_p) -> void ---
     glfwSetCursor :: (window: GLFWwindow_p, cursor: GLFWcursor_p) -> void ---
@@ -70,9 +70,9 @@ GLFWgammaramp :: struct {
     glfwSetScrollCallback :: (window: GLFWwindow_p, export_name: str) -> void ---
     // glfwSetDropCallback
     glfwJoystickPresent :: (jid: i32) -> i32 ---
-    glfwGetJoystickAxes :: (jid: i32, count: ^i32) -> cptr(f32) ---
-    glfwGetJoystickButtons :: (jid: i32, count: ^i32) -> cptr(u8) ---
-    glfwGetJoystickHats :: (jid: i32, count: ^i32) -> cptr(u8) ---
+    glfwGetJoystickAxes :: (jid: i32, count: &i32) -> cptr(f32) ---
+    glfwGetJoystickButtons :: (jid: i32, count: &i32) -> cptr(u8) ---
+    glfwGetJoystickHats :: (jid: i32, count: &i32) -> cptr(u8) ---
     glfwGetJoystickName :: (jid: i32) -> cptr(u8) ---
     glfwGetJoystickGUID :: (jid: i32) -> cptr(u8) ---
     glfwSetJoystickUserPointer :: (jid: i32, pointer: rawptr) -> void ---
@@ -81,7 +81,7 @@ GLFWgammaramp :: struct {
     // glfwSetJoystickCallback
     glfwUpdateGamepadMappings :: (string: cstr) -> i32 ---
     glfwGetGamepadName :: (jid: i32) -> cptr(u8) ---
-    glfwGetGamepadState :: (jid: i32, state: ^GLFWgamepadstate) -> i32 ---
+    glfwGetGamepadState :: (jid: i32, state: &GLFWgamepadstate) -> i32 ---
     glfwSetClipboardString :: (window: GLFWwindow_p, string: cstr) -> void ---
     glfwGetClipboardString :: (window: GLFWwindow_p) -> cptr(u8) ---
     glfwGetTime :: () -> f64 ---
@@ -89,21 +89,21 @@ GLFWgammaramp :: struct {
     glfwGetTimerValue :: () -> u64 ---
     glfwGetTimerFrequency :: () -> u64 ---
 
-    glfwGetMonitors :: (out_count: ^i32) -> cptr(GLFWmonitor_p) ---
+    glfwGetMonitors :: (out_count: &i32) -> cptr(GLFWmonitor_p) ---
     glfwGetPrimaryMonitor :: () -> GLFWmonitor_p ---
-    glfwGetMonitorPos :: (monitor: GLFWmonitor_p, xpos, ypos: ^i32) -> void ---
-    glfwGetMonitorWorkarea :: (monitor: GLFWmonitor_p, xpos, ypos, width, height: ^i32) -> void ---
-    glfwGetMonitorPhysicalSize :: (monitor: GLFWmonitor_p, widthMM, heightMM: ^i32) -> void ---
-    glfwGetMonitorContentScale :: (monitor: GLFWmonitor_p, xscale, yscale: ^f32) -> void ---
+    glfwGetMonitorPos :: (monitor: GLFWmonitor_p, xpos, ypos: &i32) -> void ---
+    glfwGetMonitorWorkarea :: (monitor: GLFWmonitor_p, xpos, ypos, width, height: &i32) -> void ---
+    glfwGetMonitorPhysicalSize :: (monitor: GLFWmonitor_p, widthMM, heightMM: &i32) -> void ---
+    glfwGetMonitorContentScale :: (monitor: GLFWmonitor_p, xscale, yscale: &f32) -> void ---
     glfwGetMonitorName :: (monitor: GLFWmonitor_p) -> cptr(u8) ---
     glfwSetMonitorUserPointer :: (monitor: GLFWmonitor_p, pointer: rawptr) -> void ---
     glfwGetMonitorUserPointer :: (monitor: GLFWmonitor_p) -> rawptr ---
     // glfwSetMonitorCallback
-    glfwGetVideoModes :: (monitor: GLFWmonitor_p, out_count: ^i32) -> cptr(GLFWvidmode) ---
+    glfwGetVideoModes :: (monitor: GLFWmonitor_p, out_count: &i32) -> cptr(GLFWvidmode) ---
     glfwGetVideoMode :: (monitor: GLFWmonitor_p) -> cptr(GLFWvidmode) ---
     glfwSetGamma :: (monitor: GLFWmonitor_p, gamma: f32) -> void ---
-    // glfwGetGammaRamp :: (monitor: GLFWmonitor_p, out_ramp: ^GLFWgammramp) -> void ---
-    // glfwSetGammaRamp :: (monitor: GLFWmonitor_p, ramp: ^GLFWgammramp) -> void ---
+    // glfwGetGammaRamp :: (monitor: GLFWmonitor_p, out_ramp: &GLFWgammramp) -> void ---
+    // glfwSetGammaRamp :: (monitor: GLFWmonitor_p, ramp: &GLFWgammramp) -> void ---
  
 
     glfwCreateWindow :: (width, height: i32, title: cstr, monitor: GLFWmonitor_p = 0, share: GLFWwindow_p = 0) -> GLFWwindow_p ---
@@ -113,15 +113,15 @@ GLFWgammaramp :: struct {
     glfwDefaultWindowHints :: () -> void ---
     glfwWindowHint :: (hint: i32, value: i32) -> void ---
     glfwSetWindowTitle :: (window: GLFWwindow_p, title: cstr) -> void ---
-    glfwSetWindowIcon :: (window: GLFWwindow_p, count: i32, images: ^GLFWimage) -> void ---
-    glfwGetWindowPos :: (window: GLFWwindow_p, xpos, ypos: ^i32) -> void ---
+    glfwSetWindowIcon :: (window: GLFWwindow_p, count: i32, images: &GLFWimage) -> void ---
+    glfwGetWindowPos :: (window: GLFWwindow_p, xpos, ypos: &i32) -> void ---
     glfwSetWindowPos :: (window: GLFWwindow_p, xpos, ypos: i32) -> void ---
-    glfwGetWindowSize :: (window: GLFWwindow_p, xpos, ypos: ^i32) -> void ---
+    glfwGetWindowSize :: (window: GLFWwindow_p, xpos, ypos: &i32) -> void ---
     glfwSetWindowSize :: (window: GLFWwindow_p, xpos, ypos: i32) -> void ---
     glfwSetWindowSizeLimits :: (window: GLFWwindow_p, minwidth, minheight, maxwidth, maxheight: i32) -> void ---
     glfwSetWindowAspectRatio :: (window: GLFWwindow_p, numer, denom: i32) -> void ---
-    glfwGetFramebufferSize :: (window: GLFWwindow_p, width, height: ^i32) -> void ---
-    glfwGetWindowFrameSize :: (window: GLFWwindow_p, left, top, right, bottom: ^i32) -> void ---
+    glfwGetFramebufferSize :: (window: GLFWwindow_p, width, height: &i32) -> void ---
+    glfwGetWindowFrameSize :: (window: GLFWwindow_p, left, top, right, bottom: &i32) -> void ---
     glfwIconifyWindow :: (window: GLFWwindow_p) -> void ---
     glfwRestoreWindow :: (window: GLFWwindow_p) -> void ---
     glfwMaximizeWindow :: (window: GLFWwindow_p) -> void ---
